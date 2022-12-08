@@ -1,5 +1,4 @@
-from fonc_roi_en_vie import roi_en_vie_J1, roi_en_vie_J2
-from fonc_pion_en_nombre import pions_en_nombre
+from fonc_pions import*
 
 
 def lancer(J1: str, J2: str) -> None:
