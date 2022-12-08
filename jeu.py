@@ -11,8 +11,7 @@ def test():
     print("")
     print("")
     print("")
-    dico_plateau = placement_pion(dico_plateau, pions_en_nombre('Fou2',1), pos('E3'))
-    afficher_plateau(dico_plateau)
+    afficher_plateau(placement_pion_depart(dico_plateau))
     print("")
     print("")
 

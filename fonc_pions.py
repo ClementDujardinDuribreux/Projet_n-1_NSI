@@ -35,13 +35,19 @@ def placement_pion(dico_plateau:dict, pion:int, pos:tuple) -> dict:
 
 ##  ------------------------------------------------------------  ##
 
-def roi_en_vie_J1():
-    pass
+def roi_en_vie_J1(dico_plateau:dict) -> bool:
+    for listes in dico_plateau.values():
+        if 4 in listes:
+            return True
+    return False
 
 ##  ------------------------------------------------------------  ##
 
-def roi_en_vie_J2():
-    pass
+def roi_en_vie_J2(dico_plateau:dict) -> bool:
+    for listes in dico_plateau.values():
+        if 130 in listes:
+            return True
+    return False
 
 ##  ------------------------------------------------------------  ##
 
