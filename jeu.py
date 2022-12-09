@@ -1,5 +1,6 @@
 from fonc_pions import*
 from gerer_plateau import*
+from fonc_contrainte import*
 
 ##  ----------------------- Zone TEST --------------------------  ##
 
@@ -38,6 +39,7 @@ def lancer(J1: str, J2: str) -> None:
         afficher_plateau(dico_plateau)
         tour += 1
     
+    tour -= 1
     if roi_en_vie_J1(dico_plateau) == False:
         gagnant = J2
     else:
