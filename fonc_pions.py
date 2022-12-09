@@ -33,6 +33,20 @@ def placement_pion(dico_plateau:dict, pion:int, pos:tuple) -> dict:
     dico_plateau[pos[0]].insert(pos[1] - 1,pion)
     return dico_plateau
 
+
+def deplacer_pion(dico_plateau:dict, pion:int, pos_de_deplacement:tuple) -> dict:
+    """
+    Cette fonction permet de deplacer un pion d'un case a une autre
+    """
+    for cle in dico_plateau.keys():
+        if pion in dico_plateau[cle]:
+            pos_ini = (cle,dico_plateau[cle].index(pion) + 1)
+    
+    placement_pion(dico_plateau, pion, pos_de_deplacement)
+    placement_pion(dico_plateau, '', pos_ini)
+
+    return dico_plateau
+
 ##  ------------------------------------------------------------  ##
 
 def roi_en_vie_J1(dico_plateau:dict) -> bool:
