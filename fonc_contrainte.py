@@ -30,3 +30,8 @@ def contrainte_cavalier():
 
 def contrainte_roi():
     pass
+
+##  ------------------------------------------------------------  ##
+
+def contraite_dame():
+    pass
