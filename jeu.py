@@ -10,6 +10,9 @@ def test():
 
 
 def lancer(J1: str, J2: str) -> None:
+    """
+    Cette fonction permet de lancer le jeu d'échec
+    """
 
     ##ficher = open('/Pojet_n-1_NSI/historique_parties.txt', 'w')
     tour = 1
@@ -30,9 +33,9 @@ def lancer(J1: str, J2: str) -> None:
         print("")
         print("")
         print("C'est au tour du Joueur", joueur, ':', player_name)
+
         dico_plateau = deplacer_pion(dico_plateau, pions_en_nombre(input("Quel piont veux tu bouger ? : "), joueur), pos(input('Où ? : ')))
         afficher_plateau(dico_plateau)
-
         tour += 1
     
     if roi_en_vie_J1(dico_plateau) == False:
@@ -41,10 +44,12 @@ def lancer(J1: str, J2: str) -> None:
         gagnant = J1
 
     print("")
+    print("ECHEC ET MAT !")
     print("")
     print('Bravo le/la gagnant(e) est :', gagnant)
     print("")
     print("")
+
     ##ficher.write(' - ' + J1 + '\n' + ' - ' + J2 + '\n' + 'Le gagnant de cette partie est : ' + gagnant + '\n')
     ##ficher.close()
 
