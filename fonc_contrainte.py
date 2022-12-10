@@ -22,6 +22,10 @@ def case_autour(pos:tuple) -> list:
 
     liste_case_autour.remove(pos)
 
+    for tuples in liste_case_autour:
+        if 0 in tuples:
+            liste_case_autour.remove(tuples)
+
     return liste_case_autour
 
 ##  ------------------------------------------------------------  ##
