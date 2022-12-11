@@ -79,9 +79,12 @@ def contraintes_dame():
 ##  ------------------------------------------------------------  ##
 
 def contraintes_global(pion:int, pos_ini:tuple, pos_final:tuple, joueur:int) -> bool:
-    if nombre_en_pion(pion)[0] == 'roi':
+    nom_pion = nombre_en_pion(pion)[0]
+    if nombre_en_pion == 'roi':
         if contraintes_roi(pos_ini, pos_final, joueur)[0] == True:
             return True
         else:
             return False
+    if nom_pion == 'pion1' or nom_pion == 'pion2' or nom_pion == 'pion3' or nom_pion == 'pion4' or nom_pion == 'pion5' or nom_pion == 'pion6' or nom_pion == 'pion7' or nom_pion == 'pion8':
+        pass
     return (True, '')
