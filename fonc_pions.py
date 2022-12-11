@@ -15,6 +15,7 @@ def pion_en_nombre(pion: str, joueur : int) -> int:
         if pion.lower() not in j2.keys():
             return pion_en_nombre(input('Quel piont veux tu bouger ? : '), 2)
         return j2[pion.lower()]
+
     
 def nombre_en_pion(nombre:int) -> tuple:
     j1 = {1 : "tour1", 2 : "cavalier1", 3 : "fou1", 4 : "roi", 5 : "dame", 6 : "tour2", 7 : "cavalier2", 8 : "fou2", 9 : "pion1", 10 : "pion2", 11 : "pion3", 12 : "pion4", 13 : "pion5", 14 : "pion6", 15 : "pion7", 16 : "pion8"}

@@ -25,6 +25,27 @@ def case_autour(pos:tuple) -> list:
 
 ##  ------------------------------------------------------------  ##
 
+def case_en_diagonale(pos:tuple, nb_cases:int) -> list:
+    case_perimetre = []
+    liste_case_remove = []
+    for lignes in range(pos[0] - nb_cases, pos[0] + nb_cases + 1):
+        for index in range(pos[1] - nb_cases, pos[1] + nb_cases + 1):
+            case_perimetre.append((lignes, index))
+    case_perimetre.remove(pos)
+
+    for tuples in case_perimetre:
+        if tuples[0] <= 0 or tuples[0] >= 9 or tuples[1] <= 0 or tuples[1] >= 9:
+            liste_case_remove.append(tuples)
+        elif (tuples[0] + tuples[1]) / 2 != (pos[0] + pos[1]) / 2 and tuples[0] - pos[0] != tuples[1] - pos[1]:
+            liste_case_remove.append(tuples)
+
+    for tuples_remove in liste_case_remove:
+        case_perimetre.remove(tuples_remove)
+
+    return case_perimetre
+
+##  ------------------------------------------------------------  ##
+
 def liste_cases_entre():
     pass
 
@@ -40,8 +61,21 @@ def contraintes_pions():
 
 ##  ------------------------------------------------------------  ##
 
-def contraintes_fou():
-    pass
+def contraintes_fou(dico_plateau:dict, pos_ini:tuple, pos_final:tuple, joueur:int):
+    if pos_final not in case_en_diagonale(pos_ini, 7):
+        raison = 'Tu ne peux pas bouger ton roi ici !'
+        return (False, raison)
+
+    if joueur == 1:
+        if verifier_case(dico_plateau, pos_final) in joueur_1.values():
+            raison = 'Cette case est deja prise pas un de tes pions !'
+            return (False, raison)
+    elif joueur == 2:
+        if verifier_case(dico_plateau, pos_final) in joueur_2.values():
+            raison = 'Cette case est deja prise pas un de tes pions !'
+            return (False, raison)
+    
+    return (True, '')
 
 ##  ------------------------------------------------------------  ##
 
@@ -55,17 +89,17 @@ def contraintes_cavalier():
 
 ##  ------------------------------------------------------------  ##
 
-def contraintes_roi(pos_ini:tuple, pos_final:tuple, joueur:int) -> tuple:
+def contraintes_roi(dico_plateau:dict, pos_ini:tuple, pos_final:tuple, joueur:int) -> tuple:
     if pos_final not in case_autour(pos_ini):
         raison = 'Tu ne peux pas bouger ton roi ici !'
         return (False, raison)
 
     if joueur == 1:
-        if verifier_case(pos_final) in joueur_1.values():
+        if verifier_case(dico_plateau, pos_final) in joueur_1.values():
             raison = 'Cette case est deja prise pas un de tes pions !'
             return (False, raison)
     elif joueur == 2:
-        if verifier_case(pos_final) in joueur_2.values():
+        if verifier_case(dico_plateau, pos_final) in joueur_2.values():
             raison = 'Cette case est deja prise pas un de tes pions !'
             return (False, raison)
     
@@ -78,13 +112,23 @@ def contraintes_dame():
 
 ##  ------------------------------------------------------------  ##
 
-def contraintes_global(pion:int, pos_ini:tuple, pos_final:tuple, joueur:int) -> bool:
+def contraintes_global(dico_plateau:dict, pion:int, pos_ini:tuple, pos_final:tuple, joueur:int) -> tuple:
     nom_pion = nombre_en_pion(pion)[0]
-    if nombre_en_pion == 'roi':
-        if contraintes_roi(pos_ini, pos_final, joueur)[0] == True:
-            return True
+    if nom_pion == 'roi':
+        if contraintes_roi(dico_plateau, pos_ini, pos_final, joueur)[0] == True:
+            return (True, '')
         else:
-            return False
-    if nom_pion == 'pion1' or nom_pion == 'pion2' or nom_pion == 'pion3' or nom_pion == 'pion4' or nom_pion == 'pion5' or nom_pion == 'pion6' or nom_pion == 'pion7' or nom_pion == 'pion8':
+            raison = contraintes_roi(dico_plateau, pos_ini, pos_final, joueur)[1]
+            return (False, raison)
+
+    elif nom_pion == 'fou1' or nom_pion == 'fou2':
+        if contraintes_fou(dico_plateau, pos_ini, pos_final, joueur)[0] == True:
+            return (True, '')
+        else:
+            raison = contraintes_fou(dico_plateau, pos_ini, pos_final, joueur)[1]
+            return (False, raison)
+            
+    elif nom_pion == 'pion1' or nom_pion == 'pion2' or nom_pion == 'pion3' or nom_pion == 'pion4' or nom_pion == 'pion5' or nom_pion == 'pion6' or nom_pion == 'pion7' or nom_pion == 'pion8':
         pass
+
     return (True, '')
