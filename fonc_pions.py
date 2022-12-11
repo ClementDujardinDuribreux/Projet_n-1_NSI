@@ -6,13 +6,13 @@ def pion_en_nombre(pion: str, joueur : int) -> int:
 
     j1 = {"tour1" : 1, "cavalier1" : 2, "fou1" : 3, "roi" : 4, "dame" : 5, "tour2": 6, "cavalier2": 7, "fou2":8, "pion1": 9, "pion2": 10, "pion3": 11, "pion4": 12, "pion5": 13, "pion6": 14, "pion7": 15, "pion8": 16}
     j2 = {"tour1" : 100, "cavalier1" : 110, "fou1": 120, "roi" : 130, "dame" : 140, "tour2": 150, "cavalier2": 160, "fou2": 170, "pion1": 180, "pion2": 190, "pion3": 200, "pion4": 210, "pion5": 220, "pion6": 230, "pion7": 240, "pion8": 250}
-
+    
     if joueur == 1:
-        if pion not in j1.keys():
+        if pion.lower() not in j1.keys():
             return pion_en_nombre(input('Quel piont veux tu bouger ? : '), 1)
         return j1[pion.lower()]
-    else:
-        if pion not in j2.keys():
+    elif joueur == 2:
+        if pion.lower() not in j2.keys():
             return pion_en_nombre(input('Quel piont veux tu bouger ? : '), 2)
         return j2[pion.lower()]
     
@@ -34,7 +34,7 @@ def pos(x_y:str) -> tuple:
 
     lettres = {'A' : 1, 'B' : 2, 'C' : 3, 'D' : 4, 'E' : 5, 'F' : 6, 'G' : 7, 'H': 8}
 
-    if x_y[0] not in lettres.keys() or int(x_y[1]) not in range(1,9):
+    if x_y[0].upper() not in lettres.keys() or int(x_y[1]) not in range(1,9):
         return pos(input('Où ? : '))
 
     return (lettres[x_y[0].upper()],int(x_y[1]))
@@ -55,13 +55,9 @@ def deplacer_pion(dico_plateau:dict, pion:int, pos_de_deplacement:tuple) -> dict
     """
     Cette fonction permet de deplacer un pion d'un case a une autre
     """
-    for cle in dico_plateau.keys():
-        if pion in dico_plateau[cle]:
-            pos_ini = (cle,dico_plateau[cle].index(pion) + 1)
     
+    placement_pion(dico_plateau, '', pos_pion(dico_plateau,pion))
     placement_pion(dico_plateau, pion, pos_de_deplacement)
-    placement_pion(dico_plateau, '', pos_ini)
-
     return dico_plateau
 
 ##  ------------------------------------------------------------  ##
@@ -90,5 +86,8 @@ def roi_en_vie_J2(dico_plateau:dict) -> bool:
 
 ##  ------------------------------------------------------------  ##
 
-def pos_pion():
-    pass
+def pos_pion(dico_plateau:dict, pion:int) -> tuple:
+    for cle in dico_plateau.keys():
+        if pion in dico_plateau[cle]:
+            pos_ini = (cle,dico_plateau[cle].index(pion) + 1)
+    return pos_ini

@@ -69,7 +69,7 @@ def contraintes_roi(pos_ini:tuple, pos_final:tuple, joueur:int) -> tuple:
             raison = 'Cette case est deja prise pas un de tes pions !'
             return (False, raison)
     
-    return True
+    return (True, '')
 
 ##  ------------------------------------------------------------  ##
 
@@ -80,7 +80,8 @@ def contraintes_dame():
 
 def contraintes_global(pion:int, pos_ini:tuple, pos_final:tuple, joueur:int) -> bool:
     if nombre_en_pion(pion)[0] == 'roi':
-        if contraintes_roi(pos_ini, pos_final, joueur) == True:
+        if contraintes_roi(pos_ini, pos_final, joueur)[0] == True:
             return True
         else:
             return False
+    return (True, '')
