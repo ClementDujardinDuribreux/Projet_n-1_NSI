@@ -55,16 +55,19 @@ def contraintes_cavalier():
 
 ##  ------------------------------------------------------------  ##
 
-def contraintes_roi(pos_ini:tuple, pos_final:tuple, joueur:int) -> bool:
+def contraintes_roi(pos_ini:tuple, pos_final:tuple, joueur:int) -> tuple:
     if pos_final not in case_autour(pos_ini):
-        return contraintes_roi(pos_ini, pos(input('Tu ne peux pas le déplacer ici ! Où ? :')))
+        raison = 'Tu ne peux pas bouger ton roi ici !'
+        return (False, raison)
 
     if joueur == 1:
         if verifier_case(pos_final) in joueur_1.values():
-            return contraintes_roi(pos_ini, pos(input('Cette case est deja prise pas un de tes pions ! Où ? :')))
+            raison = 'Cette case est deja prise pas un de tes pions !'
+            return (False, raison)
     elif joueur == 2:
         if verifier_case(pos_final) in joueur_2.values():
-            return contraintes_roi(pos_ini, pos(input('Cette case est deja prise pas un de tes pions ! Où ? :')))
+            raison = 'Cette case est deja prise pas un de tes pions !'
+            return (False, raison)
     
     return True
 
@@ -79,3 +82,5 @@ def contraintes_global(pion:int, pos_ini:tuple, pos_final:tuple, joueur:int) -> 
     if nombre_en_pion(pion)[0] == 'roi':
         if contraintes_roi(pos_ini, pos_final, joueur) == True:
             return True
+        else:
+            return False
