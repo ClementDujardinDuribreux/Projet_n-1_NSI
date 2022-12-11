@@ -1,6 +1,6 @@
 from fonc_pions import*
 from gerer_plateau import*
-from fonc_contrainte import*
+from fonc_contraintes import*
 
 ##  ----------------------- Zone TEST --------------------------  ##
 
@@ -35,7 +35,7 @@ def lancer(J1: str, J2: str) -> None:
         print("")
         print("C'est au tour du Joueur", joueur, ':', player_name)
 
-        dico_plateau = deplacer_pion(dico_plateau, pions_en_nombre(input("Quel piont veux tu bouger ? : "), joueur), pos(input('Où ? : ')))
+        dico_plateau = deplacer_pion(dico_plateau, pion_en_nombre(input("Quel piont veux tu bouger ? : "), joueur), pos(input('Où ? : ')))
         afficher_plateau(dico_plateau)
         tour += 1
     
