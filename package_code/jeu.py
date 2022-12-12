@@ -2,6 +2,7 @@ from fonc_pions import*
 from gerer_plateau import*
 from fonc_contraintes import*
 
+
 ##  ----------------------- Zone TEST --------------------------  ##
 
 def test():
@@ -15,7 +16,7 @@ def lancer(J1: str, J2: str) -> None:
     Cette fonction permet de lancer le jeu d'échec
     """
 
-    ##ficher = open('/Pojet_n-1_NSI/historique_parties.txt', 'w')
+    ficher = open('historique_parties.txt', 'a')
     tour = 1
     dico_plateau = placement_pion_depart(generer_plateau(8,8))
 
@@ -61,9 +62,9 @@ def lancer(J1: str, J2: str) -> None:
     print("")
     print("")
 
-    ##ficher.write(' - ' + J1 + '\n' + ' - ' + J2 + '\n' + 'Le gagnant de cette partie est : ' + gagnant + '\n')
-    ##ficher.close()
+    ficher.write(' - ' + J1 + '\n' + ' - ' + J2 + '\n' + 'Le gagnant de cette partie est : ' + gagnant + '\n' + '\n')
+    ficher.close()
 
     return None
 
-lancer('J1', 'J2')
+##lancer('Florent', 'Clement')

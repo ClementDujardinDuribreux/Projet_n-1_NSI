@@ -45,4 +45,3 @@ def placement_pion_depart(dico:dict) -> dict:
     return dico
 
 ##  ------------------------------------------------------------  ##
-
