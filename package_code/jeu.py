@@ -39,8 +39,8 @@ def lancer(J1: str, J2: str) -> None:
         pion_a_bouger = pion_en_nombre(input("Quel piont veux tu bouger ? : "), joueur)
         pos_final = pos(input('Où ? : '))
 
-        while contraintes_global(dico_plateau, pion_a_bouger, pos_pion(dico_plateau,pion_a_bouger), pos_final, joueur)[0] != True:
-            raison = contraintes_global(dico_plateau, pion_a_bouger, pos_pion(dico_plateau,pion_a_bouger), pos_final, joueur)[1]
+        while contraintes_global(dico_plateau, pion_a_bouger, pos_pion(dico_plateau,pion_a_bouger), pos_final, joueur, tour)[0] != True:
+            raison = contraintes_global(dico_plateau, pion_a_bouger, pos_pion(dico_plateau,pion_a_bouger), pos_final, joueur, tour)[1]
             print(raison)
             pos_final = pos(input('Où ? : '))
 
@@ -67,4 +67,4 @@ def lancer(J1: str, J2: str) -> None:
 
     return None
 
-lancer('Florent', 'Clement')
+##lancer('Florent', 'Clement')

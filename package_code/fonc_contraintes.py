@@ -56,8 +56,51 @@ def verifier_case(dico_plateau:dict ,pos:tuple) -> int:
     
 ##  ------------------------------------------------------------  ##
 
-def contraintes_pions():
-    pass
+def contraintes_pions(tour:int, dico_plateau:dict, pos_ini:tuple, pos_final:tuple, joueur:int):
+    if tour == 1:
+        if joueur == 1:
+            if pos_final not in [(pos_ini[0] + 1, pos_ini[1]), (pos_ini[0] + 2, pos_ini[1])]:
+                raison = 'Tu ne peux pas bouger ton pion ici !'
+                return (False, raison)
+        elif joueur == 2:
+            if pos_final not in [(pos_ini[0] - 1, pos_ini[1]), (pos_ini[0] - 2, pos_ini[1])]:
+                raison = 'Tu ne peux pas bouger ton pion ici !'
+                return (False, raison)
+    else:
+        if joueur == 1:
+            if pos_final in (pos_ini[0] + 1, pos_ini[1] + 1) and verifier_case(dico_plateau, (pos_ini[0] + 1, pos_ini[1] + 1)) not in joueur_2.values():
+                if verifier_case(dico_plateau, (pos_ini[0] + 1, pos_ini[1] + 1)) == '':
+                    raison = 'Tu ne peux pas bouger ton pion ici !'
+                else:
+                    raison = 'Cette case est deja prise pas un de tes pions !'
+                return (False, raison)
+            elif pos_final in (pos_ini[0] + 1, pos_ini[1] - 1) and verifier_case(dico_plateau, (pos_ini[0] + 1, pos_ini[1] - 1 )) not in joueur_2.values():
+                if verifier_case(dico_plateau, (pos_ini[0] + 1, pos_ini[1] - 1 )) == '':
+                    raison = 'Tu ne peux pas bouger ton pion ici !'
+                else:
+                    raison = 'Cette case est deja prise pas un de tes pions !'
+                return (False, raison)
+            elif pos_final not in (pos_ini[0] + 1, pos_ini[1]):
+                raison = 'Tu ne peux pas bouger ton pion ici !'
+                return (False, raison)
+        elif joueur == 2:
+            if pos_final in (pos_ini[0] - 1, pos_ini[1] + 1) and verifier_case(dico_plateau, (pos_ini[0] - 1, pos_ini[1] + 1)) not in joueur_1.values():
+                if verifier_case(dico_plateau, (pos_ini[0] - 1, pos_ini[1] + 1)) == '':
+                    raison = 'Tu ne peux pas bouger ton pion ici !'
+                else:
+                    raison = 'Cette case est deja prise pas un de tes pions !'
+                return (False, raison)
+            elif pos_final in (pos_ini[0] - 1, pos_ini[1] - 1) and verifier_case(dico_plateau, (pos_ini[0] - 1, pos_ini[1] - 1 )) not in joueur_1.values():
+                if verifier_case(dico_plateau, (pos_ini[0] - 1, pos_ini[1] - 1 )) == '':
+                    raison = 'Tu ne peux pas bouger ton pion ici !'
+                else:
+                    raison ='Cette case est deja prise pas un de tes pions !'
+                return (False, raison)
+            elif pos_final not in (pos_ini[0] - 1, pos_ini[1]):
+                raison = 'Tu ne peux pas bouger ton pion ici !'
+                return (False, raison)
+    return (True, '')
+        
 
 ##  ------------------------------------------------------------  ##
 
@@ -112,7 +155,7 @@ def contraintes_dame():
 
 ##  ------------------------------------------------------------  ##
 
-def contraintes_global(dico_plateau:dict, pion:int, pos_ini:tuple, pos_final:tuple, joueur:int) -> tuple:
+def contraintes_global(dico_plateau:dict, pion:int, pos_ini:tuple, pos_final:tuple, joueur:int, tour:int) -> tuple:
     nom_pion = nombre_en_pion(pion)[0]
     if nom_pion == 'roi':
         if contraintes_roi(dico_plateau, pos_ini, pos_final, joueur)[0] == True:
@@ -129,6 +172,10 @@ def contraintes_global(dico_plateau:dict, pion:int, pos_ini:tuple, pos_final:tup
             return (False, raison)
             
     elif nom_pion == 'pion1' or nom_pion == 'pion2' or nom_pion == 'pion3' or nom_pion == 'pion4' or nom_pion == 'pion5' or nom_pion == 'pion6' or nom_pion == 'pion7' or nom_pion == 'pion8':
-        pass
+        if contraintes_pions(tour, dico_plateau, pos_ini, pos_final, joueur)[0] == True:
+            return (True, '')
+        else:
+            raison = contraintes_pions(tour, dico_plateau, pos_ini, pos_final, joueur)[1]
+            return (False, raison)
 
     return (True, '')
