@@ -116,6 +116,7 @@ def contraintes_pions2(dico_plateau:dict, pos_ini:tuple, pos_final:tuple, joueur
         if pos_final not in contraintes_pions(pion, dico_plateau, pos_ini, joueur):
             raison = 'Tu ne peux pas bouger ton pion ici'
             return (False, raison)
+        return (True, '')
     elif joueur == 2:
         if pos_final == (pos_ini[0] + 1, pos_ini[1]) and verifier_case(dico_plateau, pos_final) in joueur_1.values() or pos_final == (pos_ini[0] + 2, pos_ini[1]) and verifier_case(dico_plateau, pos_final) in joueur_1.values():
             raison = 'Tu ne peux pas bouger ton pion ici car il est bloqué'
@@ -126,6 +127,7 @@ def contraintes_pions2(dico_plateau:dict, pos_ini:tuple, pos_final:tuple, joueur
         if pos_final not in contraintes_pions(pion, dico_plateau, pos_ini, joueur):
             raison = 'Tu ne peux pas bouger ton pion ici'
             return (False, raison)
+        return (True, '')
 
 ##  ------------------------------------------------------------  ##
 
