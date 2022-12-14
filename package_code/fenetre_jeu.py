@@ -3,7 +3,7 @@ from tkinter import *
 from fonc_pions import*
 from gerer_plateau import*
 from fonc_contraintes import*
-from jeu import*
+##from jeu import*
 
 ## ---------------------------- JEU UI ------------------------------ ##
 

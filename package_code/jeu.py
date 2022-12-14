@@ -37,12 +37,24 @@ def lancer(J1: str, J2: str) -> None:
         print("C'est au tour du Joueur", joueur, ':', player_name)
 
         pion_a_bouger = pion_en_nombre(input("Quel piont veux tu bouger ? : "), joueur)
-        pos_final = pos(input('Où ? : '))
+        pos_final = input('Où ? : ')
 
-        while contraintes_global(dico_plateau, pion_a_bouger, pos_pion(dico_plateau,pion_a_bouger), pos_final, joueur, tour)[0] != True:
-            raison = contraintes_global(dico_plateau, pion_a_bouger, pos_pion(dico_plateau,pion_a_bouger), pos_final, joueur, tour)[1]
-            print(raison)
+        if pos_final == 'retour' :
+            pion_a_bouger = pion_en_nombre(input("Quel piont veux tu bouger ? : "), joueur)
             pos_final = pos(input('Où ? : '))
+        else:
+            pos_final = pos(pos_final)
+
+        while contraintes_global(dico_plateau, pion_a_bouger, pos_pion(dico_plateau,pion_a_bouger), pos_final, joueur)[0] != True:
+            raison = contraintes_global(dico_plateau, pion_a_bouger, pos_pion(dico_plateau,pion_a_bouger), pos_final, joueur)[1]
+            print(raison)
+            pos_final = input('Où ? : ')
+            if pos_final == 'retour':
+                pion_a_bouger = pion_en_nombre(input("Quel piont veux tu bouger ? : "), joueur)
+                pos_final = pos(input('Où ? : '))
+            else:
+                pos_final = pos(pos_final)
+            
 
         dico_plateau = deplacer_pion(dico_plateau, pion_a_bouger, pos_final)
         afficher_plateau(dico_plateau)
