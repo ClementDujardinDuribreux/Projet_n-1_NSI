@@ -149,27 +149,18 @@ def contraintes_fou(dico_plateau:dict, pos_ini:tuple, pos_final:tuple, joueur:in
 
 ##  ------------------------------------------------------------  ##
 
-def contraintes_tour(pos:tuple, nb_cases:int):
-    case_perimetre = []
-    case_remove = []
-    for lignes in range(pos[0] - nb_cases, pos[0] + nb_cases + 1):
-        for index in range(pos[1] - nb_cases, pos[1] + nb_cases + 1):
-            case_perimetre.append((lignes, index))
-    case_perimetre.remove(pos)
+def contraintes_tour(pos:tuple) -> list:
+    case_possible = []
+    for i in range(-8, 8):
+        case_possible.append((pos[0] + i, pos[1]))
+    for i in range(-8, 8):
+        case_possible.append((pos[0], pos[1] + i))
+    case_possible.remove(pos)
     
-    for tuple in case_perimetre:
-        if tuple[1] != pos[1] or tuple[0] != pos[0]:
-            case_remove.append(tuple)
-        elif tuple[0] <= 0 or tuple[0] >= 9 or tuple[1] <= 0 or tuple[1] >= 9:
-            case_remove.append(tuple)
-            
-    for tuples_remove in case_remove:
-        case_perimetre.remove(tuples_remove)
-    
-    return case_perimetre
+    return case_possible
 
 def contraintes_tour2(dico_plateau:dict, pos_ini:tuple, pos_final:tuple, joueur:int) -> tuple:
-    if pos_final not in contraintes_tour(pos_ini, 8):
+    if pos_final not in contraintes_tour(pos_ini, 7):
         raison = 'Tu ne peux pas bouger ta tour ici !'
         return (False, raison)
 
@@ -186,8 +177,34 @@ def contraintes_tour2(dico_plateau:dict, pos_ini:tuple, pos_final:tuple, joueur:
 
 ##  ------------------------------------------------------------  ##
 
-def contraintes_cavalier():
-    pass
+def contraintes_cavalier(pos_ini:tuple) -> tuple:
+    pos_possible = []
+    pos_possible.append((pos_ini[0] + 2, pos_ini[1] + 1))
+    pos_possible.append((pos_ini[0] + 2, pos_ini[1] - 1))
+    pos_possible.append((pos_ini[0] - 2, pos_ini[1] + 1))
+    pos_possible.append((pos_ini[0] - 2, pos_ini[1] - 1))
+    pos_possible.append((pos_ini[0] + 1, pos_ini[1] + 2))
+    pos_possible.append((pos_ini[0] + 1, pos_ini[1] - 2))
+    pos_possible.append((pos_ini[0] - 1, pos_ini[1] + 2))
+    pos_possible.append((pos_ini[0] - 1, pos_ini[1] - 2))
+
+    return pos_possible
+
+def contraintes_cavalier2(dico_plateau:dict, pos_ini:tuple, pos_final:tuple, joueur:int) -> tuple:
+    if pos_final not in contraintes_cavalier(pos_ini):
+        raison = 'Tu ne peux pas bouger ton cavalier ici !'
+        return (False, raison)
+
+    if joueur == 1:
+        if verifier_case(dico_plateau, pos_final) in joueur_1.values():
+            raison = 'Cette case est deja prise pas un de tes pions !'
+            return (False, raison)
+    elif joueur == 2:
+        if verifier_case(dico_plateau, pos_final) in joueur_2.values():
+            raison = 'Cette case est deja prise pas un de tes pions !'
+            return (False, raison)
+    
+    return (True, '')
 
 ##  ------------------------------------------------------------  ##
 
@@ -209,8 +226,22 @@ def contraintes_roi(dico_plateau:dict, pos_ini:tuple, pos_final:tuple, joueur:in
 
 ##  ------------------------------------------------------------  ##
 
-def contraintes_dame():
-    pass
+def contraintes_dame(dico_plateau:dict, pos_ini:tuple, pos_final:tuple, joueur:int) -> bool:
+    cases_possible = contraintes_tour(pos_ini, 8) + case_en_diagonale(pos_ini, 8)
+    if pos_final not in cases_possible:
+        raison = 'Tu ne peux pas bouger ta reine ici'
+        return (False, raison)
+
+    if joueur == 1:
+        if verifier_case(dico_plateau, pos_final) in joueur_1.values():
+            raison = 'Cette case est deja prise pas un de tes pions'
+            return (False, raison)
+    elif joueur == 2:
+        if verifier_case(dico_plateau, pos_final) in joueur_2.values():
+            raison = 'Cette case est deja prise pas un de tes pions'
+            return (False, raison)
+
+    return (True, '')
 
 ##  ------------------------------------------------------------  ##
 
@@ -242,6 +273,18 @@ def contraintes_global(dico_plateau:dict, pion:int, pos_ini:tuple, pos_final:tup
             return (True, '')
         else:
             raison = contraintes_tour2(dico_plateau, pos_ini, pos_final, joueur)[1]
+            return (False, raison)
+    elif nom_pion == 'dame':
+        if contraintes_dame(dico_plateau, pos_ini, pos_final, joueur)[0] == True:
+            return (True, '')
+        else:
+            raison = contraintes_dame(dico_plateau, pos_ini, pos_final, joueur)[1]
+            return (False, raison)
+    elif nom_pion == 'cavalier1' or nom_pion == 'cavalier2':
+        if contraintes_cavalier2(dico_plateau, pos_ini, pos_final, joueur)[0] == True:
+            return (True, '')
+        else:
+            raison = contraintes_cavalier2(dico_plateau, pos_ini, pos_final, joueur)[1]
             return (False, raison)
 
     return (True, '')
