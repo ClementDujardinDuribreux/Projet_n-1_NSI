@@ -52,18 +52,88 @@ def liste_cases_entre():
 ##  ------------------------------------------------------------  ##
 
 def verifier_case(dico_plateau:dict ,pos:tuple) -> int:
+    if dico_plateau[pos[0]][pos[1] - 1] == '':
+        return 'None'
+
     return  dico_plateau[pos[0]][pos[1] - 1]
     
 ##  ------------------------------------------------------------  ##
 
-def contraintes_pions():
-    pass
+
+def contraintes_pions(pion:int, dico_plateau:dict, pos_ini:tuple, joueur:int) -> list:
+    dico_placement_depart_J1 = {"tour1" : 'H1', "cavalier1" : 'H2', "fou1" : 'H3', "roi" : 'H4', "dame" : 'H5', "tour2": 'H8', "cavalier2": 'H7', "fou2": 'H6', "pion1": 'G1', "pion2": 'G2', "pion3": 'G3', "pion4": 'G4', "pion5": 'G5', "pion6": 'G6', "pion7": 'G7', "pion8": 'G8'}
+    dico_placement_depart_J2 = {"tour1" : 'A1', "cavalier1" : 'A2', "fou1" : 'A3', "dame" : 'A4', "roi" : 'A5', "tour2": 'A8', "cavalier2": 'A7', "fou2": 'A6', "pion1": 'B1', "pion2": 'B2', "pion3": 'B3', "pion4": 'B4', "pion5": 'B5', "pion6": 'B6', "pion7": 'B7', "pion8": 'B8'}
+    pos_possible = []
+
+    if joueur == 1:
+        if pos_ini == pos(dico_placement_depart_J1[nombre_en_pion(pion)[0]]):
+            pos_possible.append((pos_ini[0] - 1,pos_ini[1]))
+            pos_possible.append((pos_ini[0] - 2,pos_ini[1]))
+            if verifier_case(dico_plateau, (pos_ini[0] - 2,pos_ini[1])) != 'None':
+                pos_possible.remove((pos_ini[0] - 2,pos_ini[1]))
+        else:
+            pos_possible.append((pos_ini[0] - 1,pos_ini[1]))
+        if pos_ini[1] + 1 != 9:
+            if verifier_case(dico_plateau, (pos_ini[0] - 1, pos_ini[1] + 1)) in joueur_2.values():
+                pos_possible.append((pos_ini[0] - 1, pos_ini[1] + 1))
+
+        if verifier_case(dico_plateau,(pos_ini[0] - 1, pos_ini[1] - 1)) in joueur_2.values():
+            pos_possible.append((pos_ini[0] - 1, pos_ini[1] - 1))
+
+        if verifier_case(dico_plateau, (pos_ini[0] - 1,pos_ini[1])) != 'None':
+            pos_possible.remove((pos_ini[0] - 1,pos_ini[1]))
+
+    elif joueur == 2:
+        if pos_ini == pos(dico_placement_depart_J2[nombre_en_pion(pion)[0]]):
+            pos_possible.append((pos_ini[0] + 1,pos_ini[1]))
+            pos_possible.append((pos_ini[0] + 2,pos_ini[1]))
+            if verifier_case(dico_plateau, (pos_ini[0] + 2,pos_ini[1])) != 'None':
+                pos_possible.remove((pos_ini[0] + 2,pos_ini[1]))
+        else:
+            pos_possible.append((pos_ini[0] + 1,pos_ini[1]))
+        
+        if pos_ini[1] + 1 != 9:
+            if verifier_case(dico_plateau, (pos_ini[0] + 1, pos_ini[1] + 1)) in joueur_1.values():
+                pos_possible.append((pos_ini[0] + 1, pos_ini[1] + 1))
+
+        if verifier_case(dico_plateau, (pos_ini[0] + 1, pos_ini[1] - 1)) in joueur_1.values():
+            pos_possible.append((pos_ini[0] + 1, pos_ini[1] - 1))
+
+        if verifier_case(dico_plateau, (pos_ini[0] + 1,pos_ini[1])) != 'None':
+            pos_possible.remove((pos_ini[0] + 1,pos_ini[1]))
+
+    return pos_possible
+
+
+def contraintes_pions2(dico_plateau:dict, pos_ini:tuple, pos_final:tuple, joueur:int, pion:int) -> tuple:
+    if joueur == 1:
+        if pos_final == (pos_ini[0] - 1, pos_ini[1]) and verifier_case(dico_plateau, pos_final) in joueur_2.values() or pos_final == (pos_ini[0] - 2, pos_ini[1]) and verifier_case(dico_plateau, pos_final) in joueur_2.values():
+            raison = 'Tu ne peux pas bouger ton pion ici car il est bloqué'
+            return (False, raison)
+        elif pos_final not in contraintes_pions(pion, dico_plateau, pos_ini, joueur) and verifier_case(dico_plateau, pos_final) in joueur_1.values():
+            raison = 'Cette case est deja prise pas un de tes pions !'
+            return (False, raison)
+        if pos_final not in contraintes_pions(pion, dico_plateau, pos_ini, joueur):
+            raison = 'Tu ne peux pas bouger ton pion ici'
+            return (False, raison)
+        return (True, '')
+    elif joueur == 2:
+        if pos_final == (pos_ini[0] + 1, pos_ini[1]) and verifier_case(dico_plateau, pos_final) in joueur_1.values() or pos_final == (pos_ini[0] + 2, pos_ini[1]) and verifier_case(dico_plateau, pos_final) in joueur_1.values():
+            raison = 'Tu ne peux pas bouger ton pion ici car il est bloqué'
+            return (False, raison)
+        elif pos_final not in contraintes_pions(pion, dico_plateau, pos_ini, joueur) and verifier_case(dico_plateau, pos_final) in joueur_2.values():
+            raison = 'Cette case est deja prise pas un de tes pions !'
+            return (False, raison)
+        if pos_final not in contraintes_pions(pion, dico_plateau, pos_ini, joueur):
+            raison = 'Tu ne peux pas bouger ton pion ici'
+            return (False, raison)
+        return (True, '')
 
 ##  ------------------------------------------------------------  ##
 
 def contraintes_fou(dico_plateau:dict, pos_ini:tuple, pos_final:tuple, joueur:int):
     if pos_final not in case_en_diagonale(pos_ini, 7):
-        raison = 'Tu ne peux pas bouger ton roi ici !'
+        raison = 'Tu ne peux pas bouger ton fou ici !'
         return (False, raison)
 
     if joueur == 1:
@@ -79,8 +149,40 @@ def contraintes_fou(dico_plateau:dict, pos_ini:tuple, pos_final:tuple, joueur:in
 
 ##  ------------------------------------------------------------  ##
 
-def contraintes_tour():
-    pass
+def contraintes_tour(pos:tuple, nb_cases:int):
+    case_perimetre = []
+    case_remove = []
+    for lignes in range(pos[0] - nb_cases, pos[0] + nb_cases + 1):
+        for index in range(pos[1] - nb_cases, pos[1] + nb_cases + 1):
+            case_perimetre.append((lignes, index))
+    case_perimetre.remove(pos)
+    
+    for tuple in case_perimetre:
+        if tuple[1] != pos[1] or tuple[0] != pos[0]:
+            case_remove.append(tuple)
+        elif tuple[0] <= 0 or tuple[0] >= 9 or tuple[1] <= 0 or tuple[1] >= 9:
+            case_remove.append(tuple)
+            
+    for tuples_remove in case_remove:
+        case_perimetre.remove(tuples_remove)
+    
+    return case_perimetre
+
+def contraintes_tour2(dico_plateau:dict, pos_ini:tuple, pos_final:tuple, joueur:int) -> tuple:
+    if pos_final not in contraintes_tour(pos_ini, 8):
+        raison = 'Tu ne peux pas bouger ta tour ici !'
+        return (False, raison)
+
+    if joueur == 1:
+        if verifier_case(dico_plateau, pos_final) in joueur_1.values():
+            raison = 'Cette case est deja prise pas un de tes pions !'
+            return (False, raison)
+    elif joueur == 2:
+        if verifier_case(dico_plateau, pos_final) in joueur_2.values():
+            raison = 'Cette case est deja prise pas un de tes pions !'
+            return (False, raison)
+    
+    return (True, '')
 
 ##  ------------------------------------------------------------  ##
 
@@ -129,6 +231,17 @@ def contraintes_global(dico_plateau:dict, pion:int, pos_ini:tuple, pos_final:tup
             return (False, raison)
             
     elif nom_pion == 'pion1' or nom_pion == 'pion2' or nom_pion == 'pion3' or nom_pion == 'pion4' or nom_pion == 'pion5' or nom_pion == 'pion6' or nom_pion == 'pion7' or nom_pion == 'pion8':
-        pass
+        if contraintes_pions2(dico_plateau, pos_ini, pos_final, joueur, pion)[0] == True:
+            return (True, '')
+        else:
+            raison = contraintes_pions2(dico_plateau, pos_ini, pos_final, joueur, pion)[1]
+            return (False, raison)
+
+    elif nom_pion == 'tour1' or nom_pion == 'tour2':
+        if contraintes_tour2(dico_plateau, pos_ini, pos_final, joueur)[0] == True:
+            return (True, '')
+        else:
+            raison = contraintes_tour2(dico_plateau, pos_ini, pos_final, joueur)[1]
+            return (False, raison)
 
     return (True, '')
