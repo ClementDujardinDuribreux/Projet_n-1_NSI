@@ -67,4 +67,4 @@ def lancer(J1: str, J2: str) -> None:
 
     return None
 
-lancer('Florent', 'Clement')
+##lancer('Florent', 'Clement')
