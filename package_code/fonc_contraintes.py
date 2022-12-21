@@ -160,7 +160,7 @@ def contraintes_tour(pos:tuple) -> list:
     return case_possible
 
 def contraintes_tour2(dico_plateau:dict, pos_ini:tuple, pos_final:tuple, joueur:int) -> tuple:
-    if pos_final not in contraintes_tour(pos_ini, 7):
+    if pos_final not in contraintes_tour(pos_ini):
         raison = 'Tu ne peux pas bouger ta tour ici !'
         return (False, raison)
 
@@ -226,9 +226,16 @@ def contraintes_roi(dico_plateau:dict, pos_ini:tuple, pos_final:tuple, joueur:in
 
 ##  ------------------------------------------------------------  ##
 
-def contraintes_dame(dico_plateau:dict, pos_ini:tuple, pos_final:tuple, joueur:int) -> bool:
-    cases_possible = contraintes_tour(pos_ini, 8) + case_en_diagonale(pos_ini, 8)
-    if pos_final not in cases_possible:
+def contraintes_dame(pos_ini:tuple) -> tuple:
+    case_possible = []
+    for case in contraintes_tour(pos_ini):
+        case_possible.append(case)
+    for case in case_en_diagonale(pos_ini, 8):
+        case_possible.append(case)
+    return case_possible
+
+def contraintes_dame2(dico_plateau:dict, pos_ini:tuple, pos_final:tuple, joueur:int) -> tuple:
+    if pos_final not in contraintes_dame(pos_ini):
         raison = 'Tu ne peux pas bouger ta reine ici'
         return (False, raison)
 
@@ -275,10 +282,10 @@ def contraintes_global(dico_plateau:dict, pion:int, pos_ini:tuple, pos_final:tup
             raison = contraintes_tour2(dico_plateau, pos_ini, pos_final, joueur)[1]
             return (False, raison)
     elif nom_pion == 'dame':
-        if contraintes_dame(dico_plateau, pos_ini, pos_final, joueur)[0] == True:
+        if contraintes_dame2(dico_plateau, pos_ini, pos_final, joueur)[0] == True:
             return (True, '')
         else:
-            raison = contraintes_dame(dico_plateau, pos_ini, pos_final, joueur)[1]
+            raison = contraintes_dame2(dico_plateau, pos_ini, pos_final, joueur)[1]
             return (False, raison)
     elif nom_pion == 'cavalier1' or nom_pion == 'cavalier2':
         if contraintes_cavalier2(dico_plateau, pos_ini, pos_final, joueur)[0] == True:

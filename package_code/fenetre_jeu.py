@@ -32,134 +32,200 @@ window.title(" Projet NSI n°1  -  Jeu d'Echec")
 
 frame = Frame(window)
 
+case = ""
+    
 def button1():
-    return "A1"
+    global case 
+    case = "A1"
 def button2():
-    return "A2"
+    global case 
+    case = "A2"
 def button3():
-    return "A3"
+    global case 
+    case = "A3"
 def button4():
-    return "A4"
+    global case 
+    case = "A4"
 def button5():
-    return "A5"
+    global case 
+    case = "A5"
 def button6():
-    return "A6"
+    global case
+    case = "A6"
 def button7():
-    return "A7"
+    global case
+    case = "A7"
 def button8():
-    return "A8"
+    global case
+    case = "A8"
 def button9():
-    return "B1"
+    global case
+    case = "B1"
 def button10():
-    return "B2"
+    global case
+    case = "B2"
 def button11():
-    return "B3"
+    global case
+    case = "B3"
 def button12():
-    return "B4"
+    global case
+    case = "B4"
 def button13():
-    return "B5"
+    global case
+    case = "B5"
 def button14():
-    return "B6"
+    global case
+    case = "B6"
 def button15():
-    return "B7"
+    global case
+    case = "B7"
 def button16():
-    return "B8"
+    global case
+    case = "B8"
 def button17():
-    return "C1"
+    global case
+    case = "C1"
 def button18():
-    return "C2"
+    global case
+    case = "C2"
 def button19():
-    return "C3"
+    global case
+    case = "C3"
 def button20():
-    return "C4"
+    global case
+    case = "C4"
 def button21():
-    return "C5"
+    global case
+    case = "C5"
 def button22():
-    return "C6"
+    global case
+    case = "C6"
 def button23():
-    return "C7"
+    global case
+    case = "C7"
 def button24():
-    return "C8"
+    global case
+    case = "C8"
 def button25():
-    return "D1"
+    global case
+    case = "D1"
 def button26():
-    return "D2"
+    global case
+    case = "D2"
 def button27():
-    return "D3"
+    global case
+    case = "D3"
 def button28():
-    return "D4"
+    global case
+    case = "D4"
 def button29():
-    return "D5"
+    global case
+    case = "D5"
 def button30():
-    return "D6"
+    global case
+    case = "D6"
 def button31():
-    return "D7"
+    global case
+    case = "D7"
 def button32():
-    return "D8"
+    global case
+    case = "D8"
 def button33():
-    return "E1"
+    global case
+    case = "E1"
 def button34():
-    return "E2"
+    global case
+    case = "E2"
 def button35():
-    return "E3"
+    global case
+    case = "E3"
 def button36():
-    return "E4"
+    global case
+    case = "E4"
 def button37():
-    return "E5"
+    global case
+    case = "E5"
 def button38():
-    return "E6"
+    global case
+    case = "E6"
 def button39():
-    return "E7"
+    global case
+    case = "E7"
 def button40():
-    return "E8"
+    global case
+    case = "E8"
 def button41():
-    return "F1"
+    global case
+    case = "F1"
 def button42():
-    return "F2"
+    global case
+    case = "F2"
 def button43():
-    return "F3"
+    global case
+    case = "F3"
 def button44():
-    return "F4"
+    global case
+    case = "F4"
 def button45():
-    return "F5"
+    global case
+    case = "F5"
 def button46():
-    return "F6"
+    global case
+    case = "F6"
 def button47():
-    return "F7"
+    global case
+    case = "F7"
 def button48():
-    return "F8"
+    global case
+    case = "F8"
 def button49():
-    return "G1"
+    global case
+    case = "G1"
 def button50():
-    return "G2"
+    global case
+    case = "G2"
 def button51():
-    return "G3"
+    global case
+    case = "G3"
 def button52():
-    return "G4"
+    global case
+    case = "G4"
 def button53():
-    return "G5"
+    global case
+    case = "G5"
 def button54():
-    return "G6"
+    global case
+    case = "G6"
 def button55():
-    return "G7"
+    global case
+    case = "G7"
 def button56():
-    return "G8"
+    global case
+    case = "G8"
 def button57():
-    return "H1"
+    global case
+    case = "H1"
 def button58():
-    return "H2"
+    global case
+    case = "H2"
 def button59():
-    return "H3"
+    global case
+    case = "H3"
 def button60():
-    return "H4"
+    global case
+    case = "H4"
 def button61():
-    return "H5"
+    global case
+    case = "H5"
 def button62():
-    return "H6"
+    global case
+    case = "H6"
 def button63():
-    return "H7"
+    global case
+    case = "H7"
 def button64():
-    return "H8"
+    global case
+    case = "H8"
 
 button1 = Button(frame, bg="#8B4513", width=100, height= 100, command = button1, image = photo_pions_noir)
 button2 = Button(frame, bg="#FFDEAD", width=100, height= 100, command = button2, image = photo_pions_noir)
