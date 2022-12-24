@@ -80,7 +80,7 @@ def roi_en_vie_J2(dico_plateau:dict) -> bool:
     """
 
     for listes in dico_plateau.values():
-        if 130 in listes:
+        if 140 in listes:
             return True
     return False
 

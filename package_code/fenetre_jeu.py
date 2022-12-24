@@ -2,6 +2,7 @@ from tkinter import *
 from fonc_pions import*
 from gerer_plateau import*
 from fonc_contraintes import*
+import time
 
 ## ---------------------------- JEU UI ------------------------------ ##
 
@@ -1034,7 +1035,7 @@ def lancer(J1:str, J2:str) -> None:
 
     reinitilaliser_plateau(dico_plateau)
 
-    while roi_en_vie_J1(dico_plateau) != True and roi_en_vie_J2(dico_plateau) != True:
+    while roi_en_vie_J1(dico_plateau) == True and roi_en_vie_J2(dico_plateau) == True:
         if tour % 2 == 0:
             joueur = 2
         else:
@@ -1063,8 +1064,9 @@ def lancer(J1:str, J2:str) -> None:
         case_1 = StringVar()
         case_2 = StringVar()
         reinitilaliser_plateau(dico_plateau)
+        afficher_plateau(dico_plateau)
 
-    if roi_en_vie_J1 == True:
+    if roi_en_vie_J1(dico_plateau) == True:
         gagnant = J1
     else:
         gagnant = J2
@@ -1072,7 +1074,10 @@ def lancer(J1:str, J2:str) -> None:
     ficher.write(' - ' + J1 + '\n' + ' - ' + J2 + '\n' + 'Le gagnant de cette partie est : ' + gagnant + ' en ' + str(tour) + 'tours' +'\n' + '\n')
     ficher.close()
 
-    return window.quit()
+    time.sleep(2)
+    window.destroy()
+
+    return 
 
 lancer("1", "2")
 
