@@ -254,6 +254,14 @@ def contraintes_dame2(dico_plateau:dict, pos_ini:tuple, pos_final:tuple, joueur:
 
 def contraintes_global(dico_plateau:dict, pion:int, pos_ini:tuple, pos_final:tuple, joueur:int) -> tuple:
     nom_pion = nombre_en_pion(pion)[0]
+    
+    if joueur == 1 and pion not in joueur_1.values():
+        raison = 'Tu ne peux pas bouger ce pion'
+        return (False, raison)
+    elif joueur == 2 and pion not in joueur_2.values():
+        raison = 'Tu ne peux pas bouger ce pion'
+        return (False, raison)
+
     if nom_pion == 'roi':
         if contraintes_roi(dico_plateau, pos_ini, pos_final, joueur)[0] == True:
             return (True, '')
