@@ -61,7 +61,6 @@ def lancer_console(J1: str, J2: str) -> None:
 
         tour += 1
     
-    tour -= 1
     if roi_en_vie_J1(dico_plateau) == False:
         gagnant = J2
     else:
@@ -74,6 +73,7 @@ def lancer_console(J1: str, J2: str) -> None:
     print("")
     print("")
 
+    ficher.write(' -> (Version Console)' + '\n' + '\n')
     ficher.write(' - ' + J1 + '\n' + ' - ' + J2 + '\n' + 'Le gagnant de cette partie est : ' + gagnant + ' en ' + str(tour) + 'tours' +'\n' + '\n')
     ficher.close()
 

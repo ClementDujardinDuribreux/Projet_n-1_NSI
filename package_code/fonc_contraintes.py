@@ -46,8 +46,31 @@ def case_en_diagonale(pos:tuple, nb_cases:int) -> list:
 
 ##  ------------------------------------------------------------  ##
 
-def liste_cases_entre():
-    pass
+def liste_cases_entre(pos_ini:tuple, pos_final:tuple):
+    x1, y1 = pos_ini
+    x2, y2 = pos_final
+    liste = []
+
+    if x1 > x2:
+        x1, x2 = x2, x1
+    if y1 > y2:
+        y1, y2 = y2, y1
+
+    for x in range(x1, x2 + 1):
+        for y in range(y1, y2 + 1):
+            liste.append((x,y))
+
+    liste.remove(liste[0])
+    liste.remove(liste[len(liste) - 1])
+
+    return liste
+
+def verification_case_entre(dico_plateau:dict, liste_case:list):
+    for case in liste_case:
+        if verifier_case(dico_plateau,(case[0], case[1])) != 'None':
+            return False
+
+    return True
 
 ##  ------------------------------------------------------------  ##
 
@@ -116,7 +139,6 @@ def contraintes_pions2(dico_plateau:dict, pos_ini:tuple, pos_final:tuple, joueur
         if pos_final not in contraintes_pions(pion, dico_plateau, pos_ini, joueur):
             raison = 'Tu ne peux pas bouger ton pion ici'
             return (False, raison)
-        return (True, '')
     elif joueur == 2:
         if pos_final == (pos_ini[0] + 1, pos_ini[1]) and verifier_case(dico_plateau, pos_final) in joueur_1.values() or pos_final == (pos_ini[0] + 2, pos_ini[1]) and verifier_case(dico_plateau, pos_final) in joueur_1.values():
             raison = 'Tu ne peux pas bouger ton pion ici car il est bloqué'
@@ -127,7 +149,12 @@ def contraintes_pions2(dico_plateau:dict, pos_ini:tuple, pos_final:tuple, joueur
         if pos_final not in contraintes_pions(pion, dico_plateau, pos_ini, joueur):
             raison = 'Tu ne peux pas bouger ton pion ici'
             return (False, raison)
-        return (True, '')
+
+    if verification_case_entre(dico_plateau, liste_cases_entre(pos_ini, pos_final)) != True:
+        raison = 'Il y a des pions entre !'
+        return (False, raison)
+    
+    return (True, '')
 
 ##  ------------------------------------------------------------  ##
 
@@ -144,6 +171,10 @@ def contraintes_fou(dico_plateau:dict, pos_ini:tuple, pos_final:tuple, joueur:in
         if verifier_case(dico_plateau, pos_final) in joueur_2.values():
             raison = 'Cette case est deja prise pas un de tes pions !'
             return (False, raison)
+
+    if verification_case_entre(dico_plateau, liste_cases_entre(pos_ini, pos_final)) != True:
+        raison = 'Il y a des pions entre !'
+        return (False, raison)
     
     return (True, '')
 
@@ -172,6 +203,10 @@ def contraintes_tour2(dico_plateau:dict, pos_ini:tuple, pos_final:tuple, joueur:
         if verifier_case(dico_plateau, pos_final) in joueur_2.values():
             raison = 'Cette case est deja prise pas un de tes pions !'
             return (False, raison)
+
+    if verification_case_entre(dico_plateau, liste_cases_entre(pos_ini, pos_final)) != True:
+        raison = 'Il y a des pions entre !'
+        return (False, raison)
     
     return (True, '')
 
@@ -247,6 +282,10 @@ def contraintes_dame2(dico_plateau:dict, pos_ini:tuple, pos_final:tuple, joueur:
         if verifier_case(dico_plateau, pos_final) in joueur_2.values():
             raison = 'Cette case est deja prise pas un de tes pions'
             return (False, raison)
+
+    if verification_case_entre(dico_plateau, liste_cases_entre(pos_ini, pos_final)) != True:
+        raison = 'Il y a des pions entre !'
+        return (False, raison)
 
     return (True, '')
 
