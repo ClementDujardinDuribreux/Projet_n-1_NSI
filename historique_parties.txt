@@ -1,6 +1,2 @@
 Historique des parties :
 
- - Joueur 1
- - Joueur 2
-Le gagnant de cette partie est : Joueur 1
-
