@@ -1168,8 +1168,7 @@ def affichage(dico_button):
         joueur += 1
 
         if roi_en_vie_J1(dico_plateau) == False or roi_en_vie_J2(dico_plateau) == False:
-            joueur -= 1
-            if roi_en_vie_J1 == False:
+            if roi_en_vie_J1(dico_plateau) == False:
                 gagnant = j2
             else:
                 gagnant = j1
