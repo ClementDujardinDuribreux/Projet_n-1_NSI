@@ -47,22 +47,42 @@ def case_en_diagonale(pos:tuple, nb_cases:int) -> list:
 ##  ------------------------------------------------------------  ##
 
 def liste_cases_entre(pos_ini:tuple, pos_final:tuple):
-    x1, y1 = pos_ini
-    x2, y2 = pos_final
-    liste = []
+    case = pos_ini
+    liste =[]
+    if case[0] == pos_final[0] or case[1] == pos_final[1]:
+        while case != pos_final:
+            if case[0] == pos_final[0]:
+                if case[1] < pos_final[1]:
+                    case = (case[0], case[1] + 1)
+                    liste.append(case)
+                elif case[1] > pos_final[1]:
+                    case = (case[0], case[1] - 1)
+                    liste.append(case)
+            elif case[1] == pos_final[1]:
+                if case[0] < pos_final[0]:
+                    case = (case[0] + 1, case[1])
+                    liste.append(case)
+                elif case[0] > pos_final[0]:
+                    case = (case[0] - 1, case[1])
+                    liste.append(case)
 
-    if x1 > x2:
-        x1, x2 = x2, x1
-    if y1 > y2:
-        y1, y2 = y2, y1
+    while case != pos_final:
+        if case[0] < pos_final[0]:
+            if case[1] < pos_final[1]:
+                case = (case[0] + 1, case[1] + 1)
+                liste.append(case)
+            elif case[1] > pos_final[1]:
+                case = (case[0] + 1, case[1] - 1)
+                liste.append(case)
+        elif case[0] > pos_final[0]:
+            if case[1] < pos_final[1]:
+                case = (case[0] - 1, case[1] + 1)
+                liste.append(case)
+            elif case[1] > pos_final[1]:
+                case = (case[0] - 1, case[1] - 1)
+                liste.append(case)
 
-    for x in range(x1, x2 + 1):
-        for y in range(y1, y2 + 1):
-            liste.append((x,y))
-
-    liste.remove(liste[0])
     liste.remove(liste[len(liste) - 1])
-
     return liste
 
 def verification_case_entre(dico_plateau:dict, liste_case:list):
