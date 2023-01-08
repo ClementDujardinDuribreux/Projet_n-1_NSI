@@ -28,8 +28,8 @@ photo_roi_noir = PhotoImage(file="images pions/roi noir .png")
 photo_roi_blanc = PhotoImage(file="images pions/roi blanc.png")
 
 window.title("Jeu")
-window.geometry("900x900")
-window.minsize(900, 900)
+window.geometry("900x940")
+window.minsize(900, 940)
 window.config(bg='#C0C0C0')
 window.iconbitmap('images pions/logo.ico')
 window.title(" Projet NSI n°1  -  Jeu d'Echec")
@@ -938,6 +938,9 @@ def button64():
     else:
         case_1 = "H8"
         affichage(dico_button)
+
+label = Label(window, bg = '#C0C0C0', font=("Arial", 20))
+label.pack(pady=10)
         
 def intialiser_plateau():
 
@@ -947,6 +950,7 @@ def intialiser_plateau():
     global joueur
     global dico_plateau
     global dico_button
+    global label
 
     case_1 = ""
     case_2 = ""
@@ -1086,6 +1090,8 @@ def intialiser_plateau():
 
     frame.pack(expand=YES)
 
+    label_joueur(joueur, label)
+
     dico_button = {"A1": [button_1, button1, 0, 0], "A2": [button_2, button2, 1, 0], "A3": [button_3, button3, 2, 0], "A4": [button_4, button4, 3, 0],
                "A5": [button_5, button5, 4, 0], "A6": [button_6, button6, 5, 0], "A7": [button_7, button7, 6, 0], "A8": [button_8, button8, 7, 0],
                "B1": [button_9, button9, 0, 1], "B2": [button_10, button10, 1, 1], "B3": [button_11, button11, 2, 1], "B4": [button_12, button12, 3, 1],
@@ -1102,6 +1108,12 @@ def intialiser_plateau():
                "G5": [button_53, button53, 4, 6], "G6": [button_54, button54, 5, 6], "G7": [button_55, button55, 6, 6], "G8": [button_56, button56, 7, 6],
                "H1": [button_57, button57, 0, 7], "H2": [button_58, button58, 1, 7], "H3": [button_59, button59, 2, 7], "H4": [button_60, button60, 3, 7],
                "H5": [button_61, button61, 4, 7], "H6": [button_62, button62, 5, 7], "H7": [button_63, button63, 6, 7], "H8": [button_64, button64, 7, 7]}
+
+def label_joueur(joueur:int, label:Label):
+    if joueur == 1:
+        label.config(text="C'est aux pions blancs", fg = 'white')
+    else:
+        label.config(text="C'est aux pions noirs", fg = 'black')
 
 intialiser_plateau()
 
@@ -1145,11 +1157,7 @@ def affichage(dico_button):
     global joueur
     global dico_plateau
     global j1
-
-    if joueur % 2 == 0:
-        joueur = 2
-    else:
-        joueur = 1
+    global label
 
     pion_a_bouger = verifier_case(dico_plateau, pos(case_1))
 
@@ -1166,6 +1174,13 @@ def affichage(dico_button):
         dico_plateau = deplacer_pion(dico_plateau, pion_a_bouger, pos(case_2))
 
         joueur += 1
+
+        if joueur % 2 == 0:
+            joueur = 2
+        else:
+            joueur = 1
+
+        label_joueur(joueur, label)
 
         if roi_en_vie_J1(dico_plateau) == False or roi_en_vie_J2(dico_plateau) == False:
             if roi_en_vie_J1(dico_plateau) == False:
